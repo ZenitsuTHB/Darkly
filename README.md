@@ -1,52 +1,34 @@
-# Darkly
+# SQL Injection
 
-## Stored Cross-Site Scripting (Stored XSS)
+## Location
 
-### Vulnerability
+/login.php
 
-The feedback/guestbook page stores user-controlled input and later
-renders it directly into the HTML response without proper output
-encoding or sanitization.
+## Vulnerability
 
-The application therefore allows an attacker to inject HTML/JavaScript
-that is stored on the server and executed when the page is viewed.
+The application directly incorporates user-controlled input
+into an SQL query without using parameterized queries.
 
-### Root Cause
+## Detection
 
-User input from:
+...
 
-- `txtName`
-- `mtxtMessage`
+## Exploitation
 
-is stored and subsequently inserted into the HTML without contextual
-output encoding.
+...
 
-The `maxlength` attributes only provide client-side validation and can
-be bypassed by modifying the HTTP request.
+## Impact
 
-### Proof of Concept
+...
 
-A malicious HTML payload can be submitted through the feedback form.
-When the stored entry is rendered again, the browser interprets the
-injected markup and executes JavaScript.
+## Proof
 
-This confirms a Stored XSS vulnerability.
+...
 
-### Impact
+## Remediation
 
-An attacker could potentially execute JavaScript in the security
-context of the vulnerable application when another user views the
-affected page.
+Use prepared statements / parameterized queries.
 
-Depending on the application's authentication and browser security
-controls, this could lead to actions being performed on behalf of the
-victim, modification of page content, or exposure of accessible data.
+## Reproduction
 
-### Mitigation
-
-- Perform server-side input validation.
-- Apply contextual HTML output encoding.
-- Do not insert untrusted data using unsafe HTML rendering.
-- Sanitize HTML if HTML input is genuinely required.
-- Enforce server-side length limits.
-- Deploy an appropriate Content Security Policy.
+./exploit.sh
